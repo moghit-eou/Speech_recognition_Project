@@ -34,7 +34,7 @@ class MLP(object):
             activations.append(a)
         self.activations = activations
 
-
+##
     def forward_propagate(self, inputs):
         # the input layer activation is just the input itself
         activations = inputs
