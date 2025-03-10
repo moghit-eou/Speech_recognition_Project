@@ -37,6 +37,7 @@ def save_mfcc(dataset_path, json_path, num_mfcc=13, n_fft=2048, hop_length=512):
 
                 # extract mfcc from the whole 1-second signal
                 mfcc = librosa.feature.mfcc(y=signal, sr=sample_rate, n_mfcc=num_mfcc, n_fft=n_fft, hop_length=hop_length)
+                mfcc = librosa.util.fix_length(mfcc, size=87, axis=1)  # Pad 
                 mfcc = mfcc.T  # Transpose to match the format
 
                 # store the mfcc and label (genre index)
