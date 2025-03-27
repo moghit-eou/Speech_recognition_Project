@@ -5,7 +5,7 @@ from sklearn.model_selection import train_test_split
 import json 
 import numpy as np
 
-data_path_json = "input_data.json"
+data_path_json = "C:/Users/lenovo/Desktop/input_data.json"
 with open(data_path_json , "r" ) as fp :
     data = json.load(fp)
 
@@ -48,6 +48,6 @@ test_loss, test_acc = model.evaluate(X_test, y_test)
 print(f"Test accuracy: {test_acc * 100:.2f}%")
 
 # Sauvegarde du modèle
-model.save(r"C:\Users\pc\Desktop\models\modele_reconnaissance_vocale.keras")
+model.save("model.keras")
 
 

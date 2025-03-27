@@ -4,7 +4,7 @@ import librosa
 import json
 
 # Chemin du dossier principal
-data_path = "../source"
+data_path = "C:/Users/lenovo/Desktop/animals_sound"
 
 # Paramètres
 hop_length = 512
@@ -53,14 +53,12 @@ for word in os.listdir(data_path):
                 data["X"].append(spectrogram_flat.tolist())
                 data["y"].append(word)
 
-# Conversion en numpy array
-X = np.array(X)
-y = np.array(y)
+
 
 
 print("\n=================== Loading Data into json file =======================\n")
 
-json_path = "input_data.json"
+json_path = "../../input_data.json"
 with open(json_path , "w") as fp :
     json.dump(data , fp , indent= 4)
 
