@@ -2,42 +2,32 @@ import os
 os.environ["TF_ENABLE_ONEDNN_OPTS"] = "0"
 os.environ["TF_CPP_MIN_LOG_LEVEL"] = "2"  # Suppress TF logging
 os.environ["TF_ENABLE_CPU_OPTIMIZATION"] = "0"  # Suppress CPU optimization messages
-import tensorflow as tf
+
 import sounddevice as sd
 import numpy as np
 import librosa
-import scipy.io.wavfile as wav
+import tensorflow as tf
+import os
 
-# Paramètres
-duration = 1  # Durée de l'enregistrement (en secondes)
-sr = 22050  # Taux d'échantillonnage
+with np.load("../data/words.npz") as data :
+    words = data["y"]
+
+model = tf.keras.models.load_model("../models_last/last_model_e20_acc78_.keras")
+
+
+duration = 1  
+sr = 22050  
 n_fft = 2048
 hop_length = 512
-fixed_length = 10000  # Taille des vecteurs 1D
+fixed_length = 45100  
 
-try:
-    # Charger le modèle entraîné avec des options spécifiques
-    model = tf.keras.models.load_model("model2.keras")
-    print("Model loaded successfully")
-except Exception as e:
-    print(f"Error loading model: {e}")
-    exit(1)
-
-data_path = "../../animals_sound"
-# Liste des mots utilisés dans l'entraînement (à adapter selon ton dataset)
-words = os.listdir(data_path)
-
-
-print("the list of words are \nword = {}".format(words))
 
 def record_audio(duration, sr):
-    print("==========================================🎤 Enregistrement en cours...==========================================")
+    print ("")
+    print("🎤 Enregistrement en cours...")
     audio = sd.rec(int(duration * sr), samplerate=sr, channels=1, dtype=np.float32)
     sd.wait()
     print("✅ Enregistrement terminé.")
-    print("writting the file")
-    wav.write("ouput.wav" , sr , audio)
-    print("the file is written")
     return audio.flatten()
 
 def extract_features(signal, sr):
@@ -45,30 +35,35 @@ def extract_features(signal, sr):
     spectrogram = np.abs(stft)
     spectrogram_flat = spectrogram.flatten()
 
-    # Ajuster la taille
     if len(spectrogram_flat) > fixed_length:
         spectrogram_flat = spectrogram_flat[:fixed_length]
     else:
         spectrogram_flat = np.pad(spectrogram_flat, (0, fixed_length - len(spectrogram_flat)))
 
-    return np.array([spectrogram_flat])  # Ajouter une dimension pour le modèle
+    return np.array([spectrogram_flat]) 
+
+def report(prediction):
+    test = []
+    values = prediction[0]
+    for i in range ( 10 ) : 
+        value = np.round ( values[i] * 100 , 2 )
+        value = round(float(value) , 2 )
+        word = str(words[i])
+        test.append(( value , word ))
+    values_sorted = sorted(test , key = lambda item : item[0] * -1 )
+
+    print ("prediction from high to low probability")
+    print()
+    for i in range ( 10 ) : 
+        print (f"{values_sorted[i][1]} is {values_sorted[i][0]} % ")
 
 
-audio_test_path = "C:/Users/lenovo/Desktop/Speech_recognition_Project/project/ouput.wav"
-#audio_signal , _ = librosa.load(audio_test_path  , sr = sr)
-
-# 🎤 Enregistrer la voix
-
-print ("========= into function record_audio =========")
-audio_signal = record_audio(duration, sr) # real_time processing
-
-
-
-# 🔍 Extraire les caractéristiques
+    print ( "so the prediction word is " , values_sorted[0][1] )
+    return values_sorted[0][1]
+        
+    
+print("===========================================================================================================")
+audio_signal = record_audio(duration, sr)
 X_test = extract_features(audio_signal, sr)
-
-# 🤖 Faire la prédiction
 prediction = model.predict(X_test)
-predicted_word = words[np.argmax(prediction)]  # Trouver le mot le plus probable
-
-print(f"🗣️ Mot prédit : {predicted_word}")
+report(prediction)
