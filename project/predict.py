@@ -24,10 +24,10 @@ fixed_length = 45100
 
 def record_audio(duration, sr):
     print ("")
-    print("🎤 Enregistrement en cours...")
+    print("Enregistrement en cours...")
     audio = sd.rec(int(duration * sr), samplerate=sr, channels=1, dtype=np.float32)
     sd.wait()
-    print("✅ Enregistrement terminé.")
+    print("Enregistrement terminé.")
     return audio.flatten()
 
 def extract_features(signal, sr):
