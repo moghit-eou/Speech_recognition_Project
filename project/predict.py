@@ -66,4 +66,4 @@ print("=========================================================================
 audio_signal = record_audio(duration, sr)
 X_test = extract_features(audio_signal, sr)
 prediction = model.predict(X_test)
-report(prediction)
+word = report(prediction)
