@@ -1,10 +1,140 @@
 <!DOCTYPE html>
-<html>
-  <body>
-    <button id="recordBtn">Record (1s)</button>
-    <button id="submitBtn" disabled>Submit</button>
-    <audio id="audioPlayback" controls style="display:none"></audio>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Audio Recorder</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    /* Futuristic Background Styles */
+    body {
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(45deg, #0a0a23, #1e1e4b, #2a2a72);
+      background-size: 400%;
+      animation: gradientShift 15s ease infinite;
+    }
 
-    <script src="{{ url_for('static', filename='script.js') }}"></script>
-  </body>
+    /* Gradient animation */
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* Particle effect */
+    .particles {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .particle {
+      position: absolute;
+      background: rgba(255, 255, 255, 0.3);
+      border-radius: 50%;
+      animation: float 10s infinite linear;
+      box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+    }
+
+    /* Different particle sizes and animations */
+    .particle:nth-child(1) { width: 8px; height: 8px; top: 10%; left: 20%; animation-duration: 12s; }
+    .particle:nth-child(2) { width: 5px; height: 5px; top: 30%; left: 70%; animation-duration: 15s; }
+    .particle:nth-child(3) { width: 10px; height: 10px; top: 50%; left: 40%; animation-duration: 10s; }
+    .particle:nth-child(4) { width: 6px; height: 6px; top: 70%; left: 10%; animation-duration: 18s; }
+    .particle:nth-child(5) { width: 7px; height: 7px; top: 20%; left: 90%; animation-duration: 13s; }
+
+    @keyframes float {
+      0% { transform: translateY(0) translateX(0); opacity: 0.8; }
+      50% { opacity: 0.3; }
+      100% { transform: translateY(-100vh) translateX(20px); opacity: 0.8; }
+    }
+
+    /* Ensure main content is above background */
+    .content-container {
+      position: relative;
+      z-index: 1;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex items-center justify-center p-4">
+  <!-- Particle Elements -->
+  <div class="particles">
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="bg-white rounded-lg shadow-lg p-6 max-w-md w-full content-container">
+    <h1 class="text-2xl font-bold text-gray-800 mb-6 text-center">Audio Recorder</h1>
+    
+    <div class="flex flex-col items-center space-y-4">
+      <!-- Record Button with Progress Ring -->
+      <div class="relative">
+        <button id="recordBtn" class="bg-blue-500 text-white font-semibold py-2 px-4 rounded-full hover:bg-blue-600 transition duration-200 flex items-center space-x-2">
+          <svg id="micIcon" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"></path>
+          </svg>
+          <span>Record (1s)</span>
+        </button>
+        <div id="progressRing" class="absolute inset-0 hidden">
+          <svg class="w-full h-full" viewBox="0 0 36 36">
+            <path class="stroke-current text-blue-200" stroke-width="2" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"></path>
+            <path id="progressPath" class="stroke-current text-blue-500" stroke-width="2" fill="none" stroke-dasharray="100" stroke-dashoffset="100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"></path>
+          </svg>
+        </div>
+      </div>
+
+      <!-- Submit Button -->
+      <button id="submitBtn" disabled class="bg-gray-300 text-gray-600 font-semibold py-2 px-4 rounded-full cursor-not-allowed hover:bg-gray-400 transition duration-200">
+        Submit
+      </button>
+
+      <!-- Audio Playback -->
+      <audio id="audioPlayback" controls class="w-full mt-4" style="display:none;"></audio>
+    </div>
+
+    <!-- Status Message -->
+    <p id="statusMessage" class="text-center text-gray-600 mt-4"></p>
+  </div>
+
+  <script src="{{ url_for('static', filename='script.js') }}"></script>
+  <script>
+    // Basic enhancements for visual feedback (requires script.js for core functionality)
+    const recordBtn = document.getElementById('recordBtn');
+    const progressRing = document.getElementById('progressRing');
+    const progressPath = document.getElementById('progressPath');
+    const statusMessage = document.getElementById('statusMessage');
+    const audioPlayback = document.getElementById('audioPlayback');
+
+    recordBtn.addEventListener('click', () => {
+      if (!recordBtn.disabled) {
+        progressRing.classList.remove('hidden');
+        statusMessage.textContent = 'Recording...';
+        let progress = 0;
+        const interval = setInterval(() => {
+          progress += 100 / 100; // 1s recording
+          progressPath.setAttribute('stroke-dashoffset', 100 - progress);
+          if (progress >= 100) {
+            clearInterval(interval);
+            progressRing.classList.add('hidden');
+            statusMessage.textContent = 'Recording complete!';
+          }
+        }, 10);
+      }
+    });
+
+    // Show audio controls when recording is available
+    audioPlayback.addEventListener('loadeddata', () => {
+      audioPlayback.style.display = 'block';
+    });
+  </script>
+</body>
 </html>
