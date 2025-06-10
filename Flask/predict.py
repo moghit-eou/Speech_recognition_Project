@@ -9,10 +9,10 @@ import librosa
 import tensorflow as tf
 import os
 
-with np.load("../data/words.npz") as data :
+with np.load(r"C:\Users\hp\Desktop\Speech_recognition_Project\data\words.npz") as data :
     words = data["y"]
 
-model = tf.keras.models.load_model("../models_last/last_model_e20_acc78_.keras")
+model = tf.keras.models.load_model(r"C:\Users\hp\Desktop\Speech_recognition_Project\models_last\last_model_e20_acc78_.keras")
 
 
 duration = 1  
