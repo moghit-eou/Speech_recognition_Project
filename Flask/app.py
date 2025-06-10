@@ -1,9 +1,16 @@
+<<<<<<< HEAD
 from flask import Flask, render_template, request, jsonify
 import os
 from predict import model, words, extract_features, sr
 import librosa
 import numpy as np
 import time
+=======
+from flask import Flask,  render_template , request
+import sys , os 
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../project')))
+import predict
+>>>>>>> b3364e7b3dec7f8eed779bcde6727322892e0e0e
 
 app = Flask(__name__)
 
@@ -57,6 +64,7 @@ def predict_page():
 @app.route('/upload', methods=['POST'])
 def upload_audio():
     if 'audio' not in request.files:
+<<<<<<< HEAD
         return jsonify({'error': 'No audio file found', 'success': False}), 400
     
     # Utiliser un nom de fichier unique pour éviter les conflits
@@ -98,6 +106,19 @@ def upload_audio():
     finally:
         # Nettoyage garantie dans tous les cas
         safe_remove_file(audio_path)
+=======
+        return 'No audio file found', 400
+    
+    audio_file = request.files['audio']
+    audio_file.save('recording.wav') 
+    signal = predict.load_audio(audio_file)
+    X_test = predict.extract_features(signal , sr = 22050)  
+    prediction = predict.model.predict(X_test)
+    word = predict.report(prediction)
+    return word, 200
+
+
+>>>>>>> b3364e7b3dec7f8eed779bcde6727322892e0e0e
 
 if __name__ == '__main__':
     app.run(debug=True)
