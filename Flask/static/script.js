@@ -69,11 +69,101 @@ class AudioRecorder {
     this.probabilitiesList = document.getElementById("probabilitiesList")
 
     this.initializeEventListeners()
+    this.initializeCustomAudioPlayer()
+  }
+
+  initializeCustomAudioPlayer() {
+    const audioContainer = document.getElementById("audioContainer")
+    const playPauseBtn = document.getElementById("playPauseBtn")
+    const playIcon = document.getElementById("playIcon")
+    const pauseIcon = document.getElementById("pauseIcon")
+    const progressBar = document.getElementById("progressBar")
+    const progressFill = document.getElementById("progressFill")
+    const progressThumb = document.getElementById("progressThumb")
+    const currentTimeDisplay = document.getElementById("currentTime")
+    const durationDisplay = document.getElementById("duration")
+    const volumeBtn = document.getElementById("volumeBtn")
+    const volumeSlider = document.getElementById("volumeSlider")
+    const volumeFill = document.getElementById("volumeFill")
+
+    let isPlaying = false
+    const isDragging = false
+
+    // Play/Pause functionality
+    playPauseBtn.addEventListener("click", () => {
+      if (isPlaying) {
+        this.audioPlayback.pause()
+      } else {
+        this.audioPlayback.play()
+      }
+    })
+
+    // Audio event listeners
+    this.audioPlayback.addEventListener("play", () => {
+      isPlaying = true
+      playIcon.style.display = "none"
+      pauseIcon.style.display = "block"
+    })
+
+    this.audioPlayback.addEventListener("pause", () => {
+      isPlaying = false
+      playIcon.style.display = "block"
+      pauseIcon.style.display = "none"
+    })
+
+    this.audioPlayback.addEventListener("timeupdate", () => {
+      if (!isDragging) {
+        const progress = (this.audioPlayback.currentTime / this.audioPlayback.duration) * 100
+        progressFill.style.width = progress + "%"
+        progressThumb.style.left = progress + "%"
+        currentTimeDisplay.textContent = this.formatTime(this.audioPlayback.currentTime)
+      }
+    })
+
+    this.audioPlayback.addEventListener("loadedmetadata", () => {
+      durationDisplay.textContent = this.formatTime(this.audioPlayback.duration)
+    })
+
+    // Progress bar interaction
+    progressBar.addEventListener("click", (e) => {
+      const rect = progressBar.getBoundingClientRect()
+      const clickX = e.clientX - rect.left
+      const progress = clickX / rect.width
+      this.audioPlayback.currentTime = progress * this.audioPlayback.duration
+    })
+
+    // Volume control
+    volumeSlider.addEventListener("click", (e) => {
+      const rect = volumeSlider.getBoundingClientRect()
+      const clickX = e.clientX - rect.left
+      const volume = clickX / rect.width
+      this.audioPlayback.volume = volume
+      volumeFill.style.width = volume * 100 + "%"
+    })
+
+    volumeBtn.addEventListener("click", () => {
+      this.audioPlayback.muted = !this.audioPlayback.muted
+      volumeFill.style.width = this.audioPlayback.muted ? "0%" : this.audioPlayback.volume * 100 + "%"
+    })
+  }
+
+  formatTime(seconds) {
+    const minutes = Math.floor(seconds / 60)
+    const remainingSeconds = Math.floor(seconds % 60)
+    return `${minutes}:${remainingSeconds.toString().padStart(2, "0")}`
   }
 
   initializeEventListeners() {
     this.recordBtn.addEventListener("click", () => this.handleRecordClick())
     this.submitBtn.addEventListener("click", () => this.submitAudio())
+  }
+
+  styleAudioPlayback() {
+    // Apply custom styling to audio element
+    this.audioPlayback.addEventListener("loadedmetadata", () => {
+      this.audioPlayback.style.display = "block"
+      this.audioPlayback.classList.add("styled-audio")
+    })
   }
 
   async handleRecordClick() {
@@ -159,11 +249,13 @@ class AudioRecorder {
     this.recordBtn.classList.add("recording")
     this.recordBtnText.textContent = "Recording..."
     this.progressRing.classList.remove("hidden")
+
     this.statusMessage.textContent = "Recording digit... Speak clearly!"
-    this.statusMessage.style.color = "#00ffff"
+    this.statusMessage.style.color = "#0080ff"
 
     // Animate progress ring
     let progress = 0
+    this.progressPath.setAttribute("stroke-dashoffset", 100 - progress)
     const interval = setInterval(() => {
       progress += 100 / 100 // 1 second = 100 steps
       this.progressPath.setAttribute("stroke-dashoffset", 100 - progress)
@@ -183,7 +275,9 @@ class AudioRecorder {
     // Create URL for playback
     const audioUrl = URL.createObjectURL(this.recordedBlob)
     this.audioPlayback.src = audioUrl
-    this.audioPlayback.style.display = "block"
+
+    // Show custom audio player instead of default
+    document.getElementById("audioContainer").style.display = "block"
 
     // Update UI
     this.recordBtn.disabled = false
@@ -194,7 +288,7 @@ class AudioRecorder {
     this.submitBtn.classList.add("cursor-pointer")
 
     this.statusMessage.textContent = "Recording complete! Click 'Predict Digit' to analyze."
-    this.statusMessage.style.color = "#00ff88"
+    this.statusMessage.style.color = "#0080ff"
   }
 
   async submitAudio() {
@@ -209,7 +303,7 @@ class AudioRecorder {
       this.submitBtn.disabled = true
       this.submitBtn.textContent = "Analyzing..."
       this.statusMessage.textContent = "AI is processing your audio..."
-      this.statusMessage.style.color = "#00ffff"
+      this.statusMessage.style.color = "#0080ff"
 
       // Create FormData
       const formData = new FormData()
@@ -234,7 +328,7 @@ class AudioRecorder {
         }
 
         this.statusMessage.textContent = `AI predicted: "${result.display}"`
-        this.statusMessage.style.color = "#00ff88"
+        this.statusMessage.style.color = "#0080ff"
       } else {
         throw new Error(result.error || "Prediction failed")
       }
@@ -273,7 +367,7 @@ class AudioRecorder {
       probabilityItem.innerHTML = `
         <div class="flex justify-between items-center w-full">
           <span class="text-white font-medium">${word} ${digit}</span>
-          <span class="text-cyan-200 text-sm">${percentage}%</span>
+          <span class="text-blue-200 text-sm">${percentage}%</span>
         </div>
         <div class="probability-bar" style="width: ${item.probability}%"></div>
       `
@@ -316,5 +410,3 @@ class AudioRecorder {
 document.addEventListener("DOMContentLoaded", () => {
   new AudioRecorder()
 })
-
-

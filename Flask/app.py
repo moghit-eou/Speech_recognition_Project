@@ -1,16 +1,8 @@
-<<<<<<< HEAD
 from flask import Flask, render_template, request, jsonify
 import os
 from predict import model, words, extract_features, sr
 import librosa
 import numpy as np
-import time
-=======
-from flask import Flask,  render_template , request
-import sys , os 
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../project')))
-import predict
->>>>>>> b3364e7b3dec7f8eed779bcde6727322892e0e0e
 
 app = Flask(__name__)
 
@@ -41,18 +33,6 @@ def report_with_probabilities(prediction):
     
     return best_prediction, all_probabilities
 
-def safe_remove_file(file_path, max_retries=3, delay=0.5):
-    """Tente de supprimer un fichier de manière sécurisée avec plusieurs essais"""
-    for i in range(max_retries):
-        try:
-            if os.path.exists(file_path):
-                os.remove(file_path)
-                return True
-        except PermissionError:
-            if i < max_retries - 1:  # Ne pas attendre au dernier essai
-                time.sleep(delay)
-    return False
-
 @app.route('/')
 def home():
     return render_template("index.html")
@@ -64,18 +44,14 @@ def predict_page():
 @app.route('/upload', methods=['POST'])
 def upload_audio():
     if 'audio' not in request.files:
-<<<<<<< HEAD
         return jsonify({'error': 'No audio file found', 'success': False}), 400
     
-    # Utiliser un nom de fichier unique pour éviter les conflits
-    unique_id = str(int(time.time()))
-    audio_path = f'recording_{unique_id}.wav'
+    # Sauvegarde du fichier
+    audio_file = request.files['audio']
+    audio_path = 'recording.wav'
+    audio_file.save(audio_path)
     
     try:
-        # Sauvegarde du fichier
-        audio_file = request.files['audio']
-        audio_file.save(audio_path)
-        
         # Chargement de l'audio avec librosa (compatible avec predict.py)
         audio_signal, _ = librosa.load(audio_path, sr=sr)
         
@@ -89,6 +65,9 @@ def upload_audio():
         # Conversion en chiffre
         predicted_digit = word_to_digit.get(predicted_word.lower(), '?')
         
+        # Nettoyage
+        os.remove(audio_path)
+        
         return jsonify({
             'success': True,
             'prediction': predicted_word,
@@ -98,27 +77,12 @@ def upload_audio():
         })
         
     except Exception as e:
+        if os.path.exists(audio_path):
+            os.remove(audio_path)
         return jsonify({
             'success': False,
             'error': str(e)
         }), 500
-        
-    finally:
-        # Nettoyage garantie dans tous les cas
-        safe_remove_file(audio_path)
-=======
-        return 'No audio file found', 400
-    
-    audio_file = request.files['audio']
-    audio_file.save('recording.wav') 
-    signal = predict.load_audio(audio_file)
-    X_test = predict.extract_features(signal , sr = 22050)  
-    prediction = predict.model.predict(X_test)
-    word = predict.report(prediction)
-    return word, 200
-
-
->>>>>>> b3364e7b3dec7f8eed779bcde6727322892e0e0e
 
 if __name__ == '__main__':
     app.run(debug=True)

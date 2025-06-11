@@ -27,9 +27,11 @@
   </div>
 
   <!-- Layout container -->
-  <div class="container">
+<div class="container">
+  <div class="flex flex-col items-center gap-6">
+    
+    <!-- Main row with recorder and prediction side by side -->
     <div class="flex flex-wrap justify-center gap-4">
-      
       <!-- Audio Recorder Container -->
       <div class="content-container max-w-md">
         <h1 class="text-center mb-4">Audio Digit Predictor</h1>
@@ -58,30 +60,67 @@
             Predict Digit
           </button>
 
-          <audio id="audioPlayback" controls class="w-full mt-4" style="display:none;"></audio>
-
-          <!-- Prediction Display -->
-          <div id="predictionContainer" class="prediction-container hidden">
-            <h3 class="text-lg font-semibold mb-3 text-cyan-200">AI Prediction:</h3>
-            <div id="wordDisplay" class="word-display">Word</div>
-            <div id="digitDisplay" class="digit-display">0</div>
-            <div id="fullDisplay" class="text-sm text-white mt-2">Full: Word (0)</div>
+          <!-- Custom Audio Player -->
+          <div id="audioContainer" class="audio-container w-full" style="display:none;">
+            <div class="custom-audio-player">
+              <button id="playPauseBtn" class="play-pause-btn">
+                <svg id="playIcon" viewBox="0 0 24 24">
+                  <path d="M8 5v14l11-7z"/>
+                </svg>
+                <svg id="pauseIcon" viewBox="0 0 24 24" style="display:none;">
+                  <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>
+                </svg>
+              </button>
+              
+              <div class="audio-progress">
+                <div class="progress-bar" id="progressBar">
+                  <div class="progress-fill" id="progressFill"></div>
+                  <div class="progress-thumb" id="progressThumb"></div>
+                </div>
+                <div class="time-display">
+                  <span id="currentTime">0:00</span>
+                  <span id="duration">1</span>
+                </div>
+              </div>
+              
+              <div class="volume-control">
+                <button id="volumeBtn" class="volume-btn">
+                  <svg viewBox="0 0 24 24">
+                    <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
+                  </svg>
+                </button>
+                <div class="volume-slider" id="volumeSlider">
+                  <div class="volume-fill" id="volumeFill"></div>
+                </div>
+              </div>
+            </div>
           </div>
+
+          <audio id="audioPlayback" controls class="w-full mt-4" style="display:none;"></audio>
         </div>
 
         <p id="statusMessage" class="text-center mt-4">Click Record to start</p>
       </div>
 
-      <!-- Probabilities Container -->
-      <div id="probabilitiesContainer" class="content-container max-w-xl hidden">
-        <h2 class="text-center mb-4">All Probabilities</h2>
-        <div id="probabilitiesList" class="probability-container space-y-2">
-          <!-- Probabilities will be inserted here -->
-        </div>
+      <!-- Prediction Display -->
+      <div id="predictionContainer" class="content-container prediction-container hidden" style="min-width: 250px;">
+        <h3 class="text-lg font-semibold mb-3 text-cyan-200">AI Prediction:</h3>
+        <div id="wordDisplay" class="word-display">Word</div>
+        <div id="digitDisplay" class="digit-display">0</div>
+        <div id="fullDisplay" class="text-sm text-white mt-2">Full: Word (0)</div>
       </div>
-
     </div>
+
+    <!-- Probabilities Container -->
+    <div id="probabilitiesContainer" class="content-container max-w-xl hidden">
+      <h2 class="text-center mb-4">All Probabilities</h2>
+      <div id="probabilitiesList" class="probability-container space-y-2">
+        <!-- Probabilities will be inserted here -->
+      </div>
+    </div>
+
   </div>
+</div>
 
   <script src="{{ url_for('static', filename='script.js') }}"></script>
   <script>
