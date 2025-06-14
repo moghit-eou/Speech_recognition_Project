@@ -3,7 +3,7 @@ import os
 from predict import model, words, extract_features, sr
 import librosa
 import numpy as np
-
+# this web app was designed by achraf
 app = Flask(__name__)
 
 # Mapping des mots vers les chiffres
