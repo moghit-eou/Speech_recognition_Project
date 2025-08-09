@@ -1,10 +1,14 @@
 # 🗣️ Audio Spoken Digits Classification (MLP + Flask + Docker)
 
 - This project implements a **spoken digit classification system** using a **Multi-Layer Perceptron (MLP)** neural network trained on spectrograms of audio recordings. The model is deployed via **Flask** and containerized with **Docker**.
-- To read the full documenation of this project (FRENCH) , here's the [Link](https://drive.google.com/file/d/1xJvf5XY12HHe-Xpn4nqw97dxgLUKCEp2/view)
+- To read the full documenation of this project made by  people contributed to this project (FRENCH) , here's the [Link](https://drive.google.com/file/d/1xJvf5XY12HHe-Xpn4nqw97dxgLUKCEp2/view)
 
 ---
+## 🌐 Try the Model Online 
 
+**🔗 Live Demo:** [Hugging Face Space](https://huggingface.co/spaces/moghit/Audio_Classification)
+
+---
 ## 📌 Project Overview
 
 - **Goal:** Classify spoken digits (`0` to `9`) from audio recordings
@@ -40,7 +44,7 @@
 
 ### **What are Spectrograms?**
 
-A **spectrogram** is a visual representation of audio that shows how the frequency content of a signal changes over time. Think of it as a "musical fingerprint" that transforms sound waves into images that machines can understand.
+A **spectrogram** is a visual representation of audio that shows how the frequency content of a signal changes over time. Think of it as a "musical fingerprint" that transforms sound waves into images that machines can understand. Link above to documntation to know more
 
 **Why Spectrograms Work for Digit Classification:**
 - Each spoken digit has unique **frequency patterns**
@@ -105,11 +109,7 @@ This architecture was selected as the **optimal configuration** after experiment
 - **Inference Speed:** Real-time capable (~50ms per prediction
 ---
 ---
-## 🌐 Try the Model Online
 
-**🔗 Live Demo:** [Hugging Face Space](https://huggingface.co/spaces/moghit/Audio_Classification)
-
----
 ## 🚀 Running the Project
 
 clone the repository in huggingFace [Link](https://huggingface.co/spaces/moghit/Audio_Classification/tree/main)
