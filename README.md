@@ -61,14 +61,10 @@ A **spectrogram** is a visual representation of audio that shows how the frequen
 
 ### **Spectrogram Visualization Examples**
 
-![Digit 0 Spectrogram](https://i.ibb.co/svytstk1/image.png)
-*Spectrogram of spoken digit "0" - notice the distinct frequency bands*
+![Spectrogram](https://i.ibb.co/svytstk1/image.png)
+![Spectrogram 3D](https://i.ibb.co/rRPP9s4s/image.png)
 
-![Digit 5 Spectrogram](spectrogram_digit_5.png)
-*Spectrogram of spoken digit "5" - shows different frequency patterns compared to "0"*
 
-![All Digits Comparison](spectrogram_comparison.png)
-*Side-by-side comparison of spectrograms for digits 0-9*
 
 ### **Technical Spectrogram Details**
 - **Sample Rate:** 22,050 Hz (audio resampling)
