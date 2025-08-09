@@ -24,18 +24,26 @@
 
 ```
 .
-├── Flask/                           # Flask app with prediction endpoint & UI
-│   ├── static/                      # CSS, JS, and static files
-│   ├── templates/                   # HTML templates for web UI
-│   ├── app.py                       # Main Flask application
-│   ├── predict.py                   # Prediction logic
-│   ├── requirements.txt             # Python dependencies
-│   ├── words.npz                    # Vocabulary/label encoder
-│   ├── last_model_e20_acc78_.keras  # Trained MLP model
-│   └── ...
-├── Dockerfile                       # Docker build file
-├── .gitattributes                   # Git LFS settings
-└── README.md                        # This file
+├── Flask/                                       # Flask app with prediction endpoint & UI
+│ ├── static/                                    # CSS, JS, and static files
+│ ├── templates/                                 # HTML templates for web UI
+│ ├── app.py                                     # Main Flask application
+│ ├── predict.py                                 # Prediction logic
+│ ├── test.py                                    # Local testing script
+│ ├── requirements.txt                           # Python dependencies
+│ ├── words.npz                                  # Vocabulary/label encoder
+│ ├── recording.wav                              # Example input audio
+│ ├── last_model_e20_acc78_.keras                # Trained MLP model
+│ └── ...
+├── data/                                        # Dataset (if provided)
+├── models_last/                                 # Model storage
+├── .ipynb_checkpoints/                          # Jupyter checkpoints
+├── .gitattributes                               # Git LFS settings
+├── .gitignore                                   # Git ignore rules
+├── README.md                                    # Project documentation
+├── audio_spctrogram.ipynb                       # Notebook for spectrogram generation
+├── full_project.ipynb                           # Complete training + evaluation pipeline
+└── model_evaluation.ipynb                       # Metrics & plots
 ```
 
 ---
