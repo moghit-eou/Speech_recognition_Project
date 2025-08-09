@@ -18,4 +18,24 @@ The model is deployed via **Flask** and containerized with **Docker**, and can b
 ---
 
 ## 📂 Repository Structure
+.
+├── Flask/ # Flask app with prediction endpoint & UI
+│ ├── static/ # CSS, JS, and static files
+│ ├── templates/ # HTML templates for web UI
+│ ├── app.py # Main Flask application
+│ ├── predict.py # Prediction logic
+│ ├── test.py # Local testing script
+│ ├── requirements.txt # Python dependencies
+│ ├── words.npz # Vocabulary/label encoder
+│ ├── recording.wav # Example input audio
+│ ├── last_model_e20_acc78_.keras # Trained MLP model
+│ └── ...
+├── data/ # Dataset (if provided)
+├── models_last/ # Model storage
+├── audio_spectrogram.ipynb # Notebook for spectrogram generation
+├── model_evaluation.ipynb # Notebook for metrics & plots
+├── full_project.ipynb # Complete training + evaluation pipeline
+├── Dockerfile # Docker build file
+├── .gitattributes # Git LFS settings
+└── README.md # This file
 
