@@ -62,7 +62,7 @@ A **spectrogram** is a visual representation of audio that shows how the frequen
 ### **Spectrogram Visualization Examples**
 
 ![Spectrogram](https://i.ibb.co/svytstk1/image.png)
-![Spectrogram 3D](https://i.ibb.co/rRPP9s4s/image.png)
+![Spectrogram 3D](https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSeE_8eUApYmIyF8HeeZTzSsGOBYrN_ANtsgQ&s)
 
 
 
