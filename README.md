@@ -111,7 +111,12 @@ This architecture was selected as the **optimal configuration** after experiment
 - **Inference Time:** ~50ms per prediction
 
 ---
+## 🌐 Try the Model Online
 
+**🔗 Live Demo:** [Hugging Face Space](YOUR_HF_SPACE_LINK_HERE)
+
+Use the model directly in your browser without any local setup!
+---
 ## 🚀 Running the Project
 
 ### **Option 1: Using Docker (Recommended)**
@@ -167,11 +172,7 @@ http://localhost:7860
 
 ---
 
-## 🌐 Try the Model Online
 
-**🔗 Live Demo:** [Hugging Face Space](YOUR_HF_SPACE_LINK_HERE)
-
-Use the model directly in your browser without any local setup!
 
 ---
 
@@ -190,23 +191,6 @@ Use the model directly in your browser without any local setup!
 - **Storage:** ~200MB for model files
 - **Audio Formats:** WAV, MP3, OGG supported
 
----
-
-## 🔧 Troubleshooting
-
-### **Common Issues**
-
-**Model Loading Error:**
-- Ensure model file exists in Flask/ directory
-- Check Git LFS is properly configured for .keras files
-
-**Audio Processing Error:**
-- Install ffmpeg system dependency
-- Verify audio file format is supported
-
-**Docker Build Fails:**
-- Ensure Docker has sufficient memory (>4GB recommended)
-- Check internet connection for dependency downloads
 
 ---
 
@@ -231,18 +215,7 @@ Use the model directly in your browser without any local setup!
 - **Best Performing Digits:** 5, 2, 4 (F1-Score > 0.84)
 - **Challenging Digits:** 3, 6, 7 (confused due to phonetic similarity)
 - **Model Size:** Optimized for web deployment (~200MB)
-- **Inference Speed:** Real-time capable (~50ms per prediction)
-
----
-
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create feature branch
-3. Make your changes
-4. Test thoroughly
-5. Submit pull request
-
+- **Inference Speed:** Real-time capable (~50ms per prediction
 ---
 
 ## 📜 License
