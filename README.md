@@ -35,6 +35,37 @@ This project implements a **spoken digit classification system** using a **Multi
 
 ---
 
+## 🎵 Spectrograms: The Key to Audio Classification
+
+### **What are Spectrograms?**
+
+A **spectrogram** is a visual representation of audio that shows how the frequency content of a signal changes over time. Think of it as a "musical fingerprint" that transforms sound waves into images that machines can understand.
+
+**Why Spectrograms Work for Digit Classification:**
+- Each spoken digit has unique **frequency patterns**
+- Different people saying the same digit share similar **spectral signatures**
+- Time-frequency representation captures both **temporal** and **tonal** characteristics
+
+### **Spectrogram Visualization Examples**
+
+![Digit 0 Spectrogram](spectrogram_digit_0.png)
+*Spectrogram of spoken digit "0" - notice the distinct frequency bands*
+
+![Digit 5 Spectrogram](spectrogram_digit_5.png)
+*Spectrogram of spoken digit "5" - shows different frequency patterns compared to "0"*
+
+![All Digits Comparison](spectrogram_comparison.png)
+*Side-by-side comparison of spectrograms for digits 0-9*
+
+### **Technical Spectrogram Details**
+- **Sample Rate:** 22,050 Hz (audio resampling)
+- **Window Function:** Hann window for STFT
+- **Frequency Range:** 0 to ~11 kHz
+- **Time Resolution:** Variable based on audio length
+- **Color Scale:** Amplitude in decibels (dB)
+
+---
+
 ## 🧠 Model Architecture
 
 ### **MLP Design (Best Performing After Extensive Testing)**
