@@ -1,5 +1,7 @@
 # 🗣️ Audio Spoken Digits Classification (MLP + Flask + Docker)
-![c](https://i.ibb.co/prP8M1Yw/1-2-ZTJi-N8-Ou-Cv-Hfr-G0-Gvyuw-2x.jpg)
+<p align="center">
+  <img src="https://i.ibb.co/prP8M1Yw/1-2-ZTJi-N8-Ou-Cv-Hfr-G0-Gvyuw-2x.jpg" alt="Project Screenshot" width="600">
+</p>
 
 - This project implements a **spoken digit classification system** using a **Multi-Layer Perceptron (MLP)** neural network trained on spectrograms of audio recordings. The model is deployed via **Flask** and containerized with **Docker**.
 - To read the full documenation of this project made by  people contributed to this project (FRENCH) , here's the [Link](https://drive.google.com/file/d/1xJvf5XY12HHe-Xpn4nqw97dxgLUKCEp2/view)
