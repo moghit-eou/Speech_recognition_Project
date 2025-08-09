@@ -96,7 +96,13 @@ This architecture was selected as the **optimal configuration** after experiment
 - **Accuracy:** 79%
 - **AUC Score:** 0.95–0.97 across classes
 - **Inference Time:** ~50ms per prediction
+### 📈 Performance Notes
 
+- **Best Performing Digits:** 5, 2, 4 (F1-Score > 0.84)
+- **Challenging Digits:** 3, 6, 7 (confused due to phonetic similarity)
+- **Model Size:** Optimized for web deployment (~200MB)
+- **Inference Speed:** Real-time capable (~50ms per prediction
+---
 ---
 ## 🌐 Try the Model Online
 
@@ -187,13 +193,7 @@ http://localhost:5000
 
 ---
 
-## 📈 Performance Notes
 
-- **Best Performing Digits:** 5, 2, 4 (F1-Score > 0.84)
-- **Challenging Digits:** 3, 6, 7 (confused due to phonetic similarity)
-- **Model Size:** Optimized for web deployment (~200MB)
-- **Inference Speed:** Real-time capable (~50ms per prediction
----
 
 ## 📜 License
 
