@@ -70,7 +70,7 @@ A **spectrogram** is a visual representation of audio that shows how the frequen
 
 ### **MLP Design (Best Performing After Extensive Testing)**
 
-This architecture was selected as the **optimal configuration** after experimenting with multiple different architectures, layer configurations, and hyperparameters:
+This architecture was selected as the **optimal configuration** after experimenting ( A LOT ) multiple different architectures, layer configurations, and hyperparameters:
 
 - **Input Layer:** Flattened spectrogram features
 - **Hidden Layer 1:** 512 neurons (ReLU + Dropout 0.3)
@@ -91,19 +91,6 @@ This architecture was selected as the **optimal configuration** after experiment
 
 ### **Classification Results**
 
-| Digit | Precision | Recall | F1-Score | Support |
-|-------|-----------|--------|----------|---------|
-| 0     | 0.80      | 0.84   | 0.82     | 333     |
-| 1     | 0.75      | 0.81   | 0.78     | 340     |
-| 2     | 0.82      | 0.86   | 0.84     | 340     |
-| 3     | 0.76      | 0.73   | 0.74     | 340     |
-| 4     | 0.83      | 0.84   | 0.85     | 340     |
-| 5     | 0.86      | 0.84   | 0.85     | 340     |
-| 6     | 0.76      | 0.74   | 0.75     | 340     |
-| 7     | 0.72      | 0.81   | 0.76     | 340     |
-| 8     | 0.85      | 0.76   | 0.80     | 340     |
-| 9     | 0.85      | 0.76   | 0.80     | 340     |
-| **Overall Accuracy** | **-** | **-** | **0.79** | **3393** |
 
 **Key Metrics:**
 - **Accuracy:** 79%
@@ -113,11 +100,13 @@ This architecture was selected as the **optimal configuration** after experiment
 ---
 ## 🌐 Try the Model Online
 
-**🔗 Live Demo:** [Hugging Face Space](YOUR_HF_SPACE_LINK_HERE)
+**🔗 Live Demo:** [Hugging Face Space](https://huggingface.co/spaces/moghit/Audio_Classification)
 
-Use the model directly in your browser without any local setup!
 ---
 ## 🚀 Running the Project
+
+clone the repository in huggingFace [Link](https://huggingface.co/spaces/moghit/Audio_Classification/tree/main)
+you may have to use Git Large File Storage (LFS)
 
 ### **Option 1: Using Docker (Recommended)**
 
@@ -143,23 +132,13 @@ http://localhost:7860
 
 #### **1. Install Python 3.10**
 Ensure you have Python 3.10 installed on your system.
+clone the repository in huggingFace [Link](https://huggingface.co/spaces/moghit/Audio_Classification/tree/main)
 
 #### **2. Install Dependencies**
 ```bash
-cd Flask/
 pip install -r requirements.txt
 ```
-
-#### **3. Install System Dependencies (Linux/macOS)**
-```bash
-# Ubuntu/Debian
-sudo apt-get update && sudo apt-get install -y ffmpeg portaudio19-dev
-
-# macOS (with Homebrew)
-brew install ffmpeg portaudio
-```
-
-#### **4. Run Flask Application**
+#### **3. Run Flask Application**
 ```bash
 python app.py
 ```
@@ -167,10 +146,8 @@ python app.py
 #### **5. Access Application**
 Open your browser and navigate to:
 ```
-http://localhost:7860
+http://localhost:5000 
 ```
-
----
 
 
 
