@@ -61,7 +61,7 @@ A **spectrogram** is a visual representation of audio that shows how the frequen
 
 ### **Spectrogram Visualization Examples**
 
-![Digit 0 Spectrogram](spectrogram_digit_0.png)
+![Digit 0 Spectrogram](https://i.ibb.co/svytstk1/image.png)
 *Spectrogram of spoken digit "0" - notice the distinct frequency bands*
 
 ![Digit 5 Spectrogram](spectrogram_digit_5.png)
